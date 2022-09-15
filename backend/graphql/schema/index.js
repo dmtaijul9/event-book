@@ -26,14 +26,14 @@ type AuthData {
 
 type User {
     _id: ID!
-    name: String!
+    name: String
     email: String!
     password: String
     createdEvents: [Event!]
 }
 
 input UserInput {
-    name: String!
+    name: String
     email: String!
     password: String!
 }
