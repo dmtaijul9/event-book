@@ -25,8 +25,9 @@
 
 .form-action button {
   padding: 10px 20px;
-  background-color: #01d1d1;
-  border: 1px solid #01d1d1;
+  background-color: #5101d1;
+  border: 1px solid #5101d1;
   border-radius: 5px;
+  color: white;
   cursor: pointer;
 }

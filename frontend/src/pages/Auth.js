@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import "./Auth.css";
+import authContext from "../context/auth-context";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const authContextData = useContext(authContext);
+  console.log(authContextData);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -40,15 +43,25 @@ const Auth = () => {
       };
     }
 
-    const { data } = await axios({
-      url: "http://localhost:3000/graphql",
-      method: "POST",
-      data: JSON.stringify(requestBody),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log(data);
+    try {
+      const { data } = await axios({
+        url: "http://localhost:3000/graphql",
+        method: "POST",
+        data: JSON.stringify(requestBody),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (data?.data.login) {
+        authContextData.login(
+          data?.data.login.userId,
+          data?.data.login.token,
+          data?.data.login.tokenExpiration
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const changeLoginMode = (e) => {
